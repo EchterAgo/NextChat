@@ -64,7 +64,10 @@ const DEFAULT_AI302_URL = isApp ? AI302_BASE_URL : ApiPath["302.AI"];
 
 const DEFAULT_ACCESS_STATE = {
   accessCode: "",
-  useCustomConfig: false,
+  // BYOK: reveal the API-key field by default. Endpoint (openaiUrl) still
+  // defaults to the relative "/api/openai" proxy path, so requests keep going
+  // browser -> NextChat /api proxy -> router (no CORS needed).
+  useCustomConfig: true,
 
   provider: ServiceProvider.OpenAI,
 
@@ -148,6 +151,10 @@ const DEFAULT_ACCESS_STATE = {
   customModels: "",
   defaultModel: "",
   visionModels: "",
+
+  // branding (populated from server via /api/config; empty = use defaults)
+  appName: "",
+  appSubtitle: "",
 
   // tts config
   edgeTTSVoiceName: "zh-CN-YunxiNeural",

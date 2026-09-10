@@ -66,9 +66,11 @@ export const DEFAULT_CONFIG = {
   modelConfig: {
     model: "gpt-4o-mini" as ModelType,
     providerName: "OpenAI" as ServiceProvider,
-    temperature: 0.5,
-    top_p: 1,
-    max_tokens: 4000,
+    // Qwen3.8 recipe (matches compose --override-generation-config).
+    temperature: 1.0,
+    top_p: 0.95,
+    // Max context (matches MAX_MODEL_LEN=262144).
+    max_tokens: 262144,
     presence_penalty: 0,
     frequency_penalty: 0,
     sendMemory: true,

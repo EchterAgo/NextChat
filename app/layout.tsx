@@ -8,14 +8,18 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
 import { getServerSideConfig } from "./config/server";
 
-export const metadata: Metadata = {
-  title: "NextChat",
-  description: "Your personal ChatGPT Chat Bot.",
-  appleWebApp: {
-    title: "NextChat",
-    statusBarStyle: "default",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const serverConfig = getServerSideConfig();
+  const title = serverConfig.appName || "NextChat";
+  return {
+    title,
+    description: serverConfig.appDescription || "Your personal ChatGPT Chat Bot.",
+    appleWebApp: {
+      title,
+      statusBarStyle: "default",
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",

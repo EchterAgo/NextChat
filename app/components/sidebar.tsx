@@ -15,7 +15,7 @@ import DiscoveryIcon from "../icons/discovery.svg";
 
 import Locale from "../locales";
 
-import { useAppConfig, useChatStore } from "../store";
+import { useAccessStore, useAppConfig, useChatStore } from "../store";
 
 import {
   DEFAULT_SIDEBAR_WIDTH,
@@ -231,6 +231,7 @@ export function SideBar(props: { className?: string }) {
   const navigate = useNavigate();
   const config = useAppConfig();
   const chatStore = useChatStore();
+  const accessStore = useAccessStore();
   const [mcpEnabled, setMcpEnabled] = useState(false);
 
   useEffect(() => {
@@ -250,8 +251,8 @@ export function SideBar(props: { className?: string }) {
       {...props}
     >
       <SideBarHeader
-        title="NextChat"
-        subTitle="Build your own AI assistant."
+        title={accessStore.appName || "NextChat"}
+        subTitle={accessStore.appSubtitle || "Build your own AI assistant."}
         logo={<ChatGptIcon />}
         shouldNarrow={shouldNarrow}
       >

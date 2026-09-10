@@ -23,6 +23,11 @@ declare global {
       DISABLE_FAST_LINK?: string; // disallow parse settings from url or not
       CUSTOM_MODELS?: string; // to control custom models
       DEFAULT_MODEL?: string; // to control default model in every new chat window
+
+      // branding (env-configurable, served to client via /api/config)
+      APP_NAME?: string; // sidebar title + browser tab title
+      APP_SUBTITLE?: string; // sidebar subtitle
+      APP_DESCRIPTION?: string; // html meta description
       VISION_MODELS?: string; // to control vision models
 
       // stability only
@@ -272,6 +277,9 @@ export const getServerSideConfig = () => {
     customModels,
     defaultModel,
     visionModels,
+    appName: process.env.APP_NAME ?? "",
+    appSubtitle: process.env.APP_SUBTITLE ?? "",
+    appDescription: process.env.APP_DESCRIPTION ?? "",
     allowedWebDavEndpoints,
     enableMcp: process.env.ENABLE_MCP === "true",
   };
