@@ -19,6 +19,11 @@ ENV OPENAI_API_KEY=""
 ENV GOOGLE_API_KEY=""
 ENV CODE=""
 
+# Build-time mount path (e.g. /nextchat). Empty => served at the origin root.
+# Must be a build ARG (baked into the bundle) since basePath is compile-time.
+ARG NEXT_PUBLIC_BASE_PATH=""
+ENV NEXT_PUBLIC_BASE_PATH=${NEXT_PUBLIC_BASE_PATH}
+
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .

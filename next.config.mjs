@@ -8,6 +8,13 @@ console.log("[Next] build with chunk: ", !disableChunk);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Mount the app under a sub-path (e.g. /nextchat) when fronted by a reverse
+  // proxy that shares its origin with other apps. Set NEXT_PUBLIC_BASE_PATH at
+  // build time. Next.js prefixes assets and page routes; the client's own
+  // root-absolute /api/... fetches are remapped by the proxy (see nginx).
+  ...(process.env.NEXT_PUBLIC_BASE_PATH
+    ? { basePath: process.env.NEXT_PUBLIC_BASE_PATH }
+    : {}),
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

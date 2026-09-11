@@ -90,6 +90,11 @@ export async function requestOpenai(req: NextRequest) {
 
   const fetchUrl = cloudflareAIGatewayUrl(`${baseUrl}/${path}`);
   console.log("fetchUrl", fetchUrl);
+
+  // Forward the browser's cookies upstream so the proxy can honour
+  // session-based (OAuth) auth when the user did not supply an API key.
+  const browserCookie = req.headers.get("cookie") ?? "";
+
   const fetchOptions: RequestInit = {
     headers: {
       "Content-Type": "application/json",
@@ -98,6 +103,7 @@ export async function requestOpenai(req: NextRequest) {
       ...(serverConfig.openaiOrgId && {
         "OpenAI-Organization": serverConfig.openaiOrgId,
       }),
+      ...(browserCookie && { Cookie: browserCookie }),
     },
     method: req.method,
     body: req.body,
